@@ -1,0 +1,25 @@
+{
+  "name": "digital-contribution-platform",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "lint": "turbo run lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/passport-jwt": "^4.0.1",
+    "prettier": "^3.6.2",
+    "turbo": "^2.5.6"
+  }
+}

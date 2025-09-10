@@ -1,0 +1,57 @@
+// This is your Prisma schema file
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+    id           Int           @id @default(autoincrement())
+    email        String        @unique
+    password     String
+    fullName     String
+    isAdmin      Boolean       @default(false)
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+    groupMembers GroupMember[]
+}
+
+model Group {
+    id           Int           @id @default(autoincrement())
+    title        String
+    amount       Int
+    plan         String // 'weekly' | 'monthly'
+    currentCycle Int           @default(1)
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+    members      GroupMember[]
+    transactions Transaction[]
+}
+
+model GroupMember {
+    id          Int      @id @default(autoincrement())
+    position    Int // 1..7 payout order
+    hasReceived Boolean  @default(false)
+    userId      Int
+    groupId     Int
+    user        User     @relation(fields: [userId], references: [id])
+    group       Group    @relation(fields: [groupId], references: [id])
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    @@unique([groupId, position])
+    @@unique([groupId, userId])
+}
+
+model Transaction {
+    id          Int      @id @default(autoincrement())
+    amount      Int
+    fee         Int
+    groupId     Int
+    group       Group    @relation(fields: [groupId], references: [id])
+    recipientId Int
+    createdAt   DateTime @default(now())
+}

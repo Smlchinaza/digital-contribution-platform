@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import { apiService } from "../../services/api";
+import { Group } from "../../types/group";
 import { ProtectedRoute } from "../../components/ProtectedRoute";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { ErrorMessage } from "../../components/ErrorMessage";
@@ -9,7 +10,7 @@ import Link from "next/link";
 
 export default function DashboardPage() {
   const { token, user } = useAuth();
-  const [groups, setGroups] = useState<any[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showCreateForm, setShowCreateForm] = useState(false);

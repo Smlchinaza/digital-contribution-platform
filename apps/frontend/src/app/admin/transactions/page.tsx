@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../providers/AuthProvider";
 import { apiService } from "../../../services/api";
+import { Transaction } from "../../../types/transaction";
 
 export default function AdminTransactionsPage() {
   const { token } = useAuth();
-  const [tx, setTx] = useState<any[]>([]);
+  const [tx, setTx] = useState<Transaction[]>([]);
 
   useEffect(() => {
     async function load() {

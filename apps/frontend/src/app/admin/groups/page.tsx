@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../providers/AuthProvider";
 import { apiService } from "../../../services/api";
+import { Group } from "../../../types/group";
 
 export default function AdminGroupsPage() {
   const { token } = useAuth();
-  const [groups, setGroups] = useState<any[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
 
   useEffect(() => {
     async function load() {

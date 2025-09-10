@@ -1,3 +1,8 @@
+import { Group } from '../types/group';
+import { PayoutInfo } from '../types/payout';
+import { Transaction } from '../types/transaction';
+import { User } from '../types/user';
+
 const API_BASE_URL = 'http://localhost:3001';
 
 class ApiService {
@@ -54,11 +59,11 @@ class ApiService {
   }
 
   // Groups endpoints
-  async getGroups() {
+  async getGroups(): Promise<Group[]> {
     const response = await fetch(`${API_BASE_URL}/groups`, {
       headers: this.getAuthHeaders(),
     });
-    return this.handleResponse(response);
+    return this.handleResponse<Group[]>(response);
   }
 
   async createGroup(data: { title: string; amount: number; plan: string }) {
@@ -78,11 +83,11 @@ class ApiService {
     return this.handleResponse(response);
   }
 
-  async getNextPayout(groupId: string) {
+  async getNextPayout(groupId: string): Promise<PayoutInfo> {
     const response = await fetch(`${API_BASE_URL}/groups/${groupId}/next-payout`, {
       headers: this.getAuthHeaders(),
     });
-    return this.handleResponse(response);
+    return this.handleResponse<PayoutInfo>(response);
   }
 
   async markPayoutComplete(groupId: string) {
@@ -94,33 +99,33 @@ class ApiService {
   }
 
   // Admin endpoints
-  async getAdminUsers() {
+  async getAdminUsers(): Promise<User[]> {
     const response = await fetch(`${API_BASE_URL}/admin/users`, {
       headers: this.getAuthHeaders(),
     });
-    return this.handleResponse(response);
+    return this.handleResponse<User[]>(response);
   }
 
-  async getAdminGroups() {
+  async getAdminGroups(): Promise<Group[]> {
     const response = await fetch(`${API_BASE_URL}/admin/groups`, {
       headers: this.getAuthHeaders(),
     });
-    return this.handleResponse(response);
+    return this.handleResponse<Group[]>(response);
   }
 
-  async getAdminTransactions() {
+  async getAdminTransactions(): Promise<Transaction[]> {
     const response = await fetch(`${API_BASE_URL}/admin/transactions`, {
       headers: this.getAuthHeaders(),
     });
-    return this.handleResponse(response);
+    return this.handleResponse<Transaction[]>(response);
   }
 
-  async advanceGroup(groupId: string) {
+  async advanceGroup(groupId: string): Promise<Group> {
     const response = await fetch(`${API_BASE_URL}/admin/groups/${groupId}/advance`, {
       method: 'PATCH',
       headers: this.getAuthHeaders(),
     });
-    return this.handleResponse(response);
+    return this.handleResponse<Group>(response);
   }
 }
 

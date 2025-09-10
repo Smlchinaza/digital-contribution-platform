@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../providers/AuthProvider";
 import { apiService } from "../../../services/api";
+import { User } from "../../../types/user";
 
 export default function AdminUsersPage() {
   const { token } = useAuth();
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     async function load() {

@@ -22,6 +22,19 @@ export class AuthService {
       email: registerDto.email.toLowerCase(),
       password: hashedPassword,
       fullName: registerDto.fullName,
+      phone: registerDto.phone,
+      dob: registerDto.dob,
+      gender: registerDto.gender,
+      address: registerDto.address,
+      nextOfKin: registerDto.nextOfKin,
+      nextOfKinPhone: registerDto.nextOfKinPhone,
+      bankName: registerDto.bankName,
+      accountNumber: registerDto.accountNumber,
+      accountName: registerDto.accountName,
+      nin: registerDto.nin,
+      contributionAmount: registerDto.contributionAmount,
+      frequency: registerDto.frequency,
+      startDate: registerDto.startDate,
     });
     const token = await this.signToken(user.id, user.email);
     return { user: this.sanitizeUser(user), accessToken: token };

@@ -13,6 +13,22 @@ model User {
     email        String        @unique
     password     String
     fullName     String
+    // Optional profile fields
+    phone        String?
+    dob          String?
+    gender       String?
+    address      String?
+    nextOfKin    String?
+    nextOfKinPhone String?
+    // Optional bank fields
+    bankName     String?
+    accountNumber String?
+    accountName  String?
+    nin          String?
+    // Contribution preferences
+    contributionAmount Int?
+    frequency    String?
+    startDate    String?
     isAdmin      Boolean       @default(false)
     createdAt    DateTime      @default(now())
     updatedAt    DateTime      @updatedAt

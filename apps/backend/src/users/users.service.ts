@@ -29,5 +29,12 @@ export class UsersService {
 
   async all(): Promise<User[]> {
     return this.prisma.user.findMany();
-}
+  }
+
+  async setAdminStatus(userId: number, isAdmin: boolean): Promise<User> {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: { isAdmin },
+    });
+  }
 }

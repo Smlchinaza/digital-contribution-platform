@@ -107,6 +107,22 @@ class ApiService {
     return this.handleResponse<User[]>(response);
   }
 
+  async promoteUser(userId: number): Promise<User> {
+    const response = await fetch(`${API_BASE_URL}/admin/users/${userId}/promote`, {
+      method: 'PATCH',
+      headers: this.getAuthHeaders(),
+    });
+    return this.handleResponse<User>(response);
+  }
+
+  async demoteUser(userId: number): Promise<User> {
+    const response = await fetch(`${API_BASE_URL}/admin/users/${userId}/demote`, {
+      method: 'PATCH',
+      headers: this.getAuthHeaders(),
+    });
+    return this.handleResponse<User>(response);
+  }
+
   async getAdminGroups(): Promise<Group[]> {
     const response = await fetch(`${API_BASE_URL}/admin/groups`, {
       headers: this.getAuthHeaders(),

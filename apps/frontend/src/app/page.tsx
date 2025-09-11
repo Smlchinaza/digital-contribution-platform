@@ -5,9 +5,11 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "../providers/AuthProvider";
 import { Header } from "../components/Header";
 import { Hero } from "../components/Hero";
-import { FeeNotice } from "../components/FeeNotice";
+// Removed FeeNotice per redesign
 import { Tiers } from "../components/Tiers";
 import { HowItWorks } from "../components/HowItWorks";
+import { Team } from "../components/Team";
+import { Support } from "../components/Support";
 
 export default function Home() {
   const router = useRouter();
@@ -48,10 +50,7 @@ export default function Home() {
         </div>
 
         <div className="px-5">
-          {/* Glass card: Fee notice */}
-          <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
-            <FeeNotice />
-          </div>
+          {/* Fee notice removed */}
 
           {/* Contribution Groups */}
           <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur">
@@ -63,8 +62,18 @@ export default function Home() {
             <HowItWorks />
           </div>
 
+          {/* Team behind the system */}
+          <div className="mb-8 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+            <Team />
+          </div>
+
+          {/* Support */}
+          <div className="mb-8 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
+            <Support />
+          </div>
+
           <footer className="mb-10 rounded-2xl border border-white/10 bg-white/5 p-5 text-center backdrop-blur">
-            <p className="text-white/90">© 2025 Church Community Contribution System · support@churchcontrib.org</p>
+            <p className="text-white/90">© 2025 Digital Contributory System · support@churchcontrib.org</p>
           </footer>
         </div>
       </div>

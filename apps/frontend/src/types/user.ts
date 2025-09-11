@@ -1,5 +1,5 @@
 export interface User {
-  id: string;
+  id: number;
   fullName: string;
   email: string;
   phone?: string;
@@ -15,7 +15,7 @@ export interface User {
   contributionAmount?: number;
   frequency?: string;
   startDate?: string;
-  role: string;
+  isAdmin: boolean;
   createdAt: string;
   updatedAt: string;
 }

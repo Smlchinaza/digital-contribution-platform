@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "../providers/AuthProvider";
+import ChurchLogo from "../images/Church logo.jpg";
 
 export function Header() {
   const { user, logout } = useAuth();
@@ -9,9 +11,11 @@ export function Header() {
       <div className="mx-auto max-w-[1200px] px-5 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <div className="text-2xl font-bold text-white">Church Community</div>
+            <Link href="/" className="flex items-center gap-2">
+              <Image src={ChurchLogo} alt="Church logo" width={40} height={40} className="rounded-md object-cover" />
+              <span className="sr-only">Home</span>
+            </Link>
             <nav className="hidden md:flex gap-6">
-              <Link className="text-white/80 hover:text-white transition" href="/">Home</Link>
               {user && <Link className="text-white/80 hover:text-white transition" href="/dashboard">Dashboard</Link>}
               <a className="text-white/80 hover:text-white transition" href="#how">How It Works</a>
             </nav>

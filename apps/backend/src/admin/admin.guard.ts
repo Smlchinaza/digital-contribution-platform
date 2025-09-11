@@ -4,12 +4,8 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 export class AdminGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const req = context.switchToHttp().getRequest();
-    const user = req.user as { email?: string } | undefined;
-    const adminEmail = process.env.ADMIN_EMAIL;
-    if (!user || !user.email || !adminEmail) {
-      throw new UnauthorizedException('Admin access denied');
-    }
-    if (user.email.toLowerCase() !== adminEmail.toLowerCase()) {
+    const user = req.user as { isAdmin?: boolean } | undefined;
+    if (!user || !user.isAdmin) {
       throw new UnauthorizedException('Admin access denied');
     }
     return true;

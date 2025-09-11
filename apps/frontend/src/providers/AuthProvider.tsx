@@ -1,16 +1,15 @@
 "use client";
 import { createContext, useContext, useEffect, useMemo, useState, useCallback } from "react";
 import { apiService } from "../services/api";
-
-type User = { id: string; email: string; fullName: string } | null;
+import type { User } from "../types/user";
 
 type AuthResponse = {
-  user: Exclude<User, null>;
+  user: User;
   accessToken: string;
 };
 
 type AuthContextValue = {
-  user: User;
+  user: User | null;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
   register: (fullName: string, email: string, password: string) => Promise<void>;
@@ -21,7 +20,7 @@ type AuthContextValue = {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [inactivityTimer, setInactivityTimer] = useState<NodeJS.Timeout>();
 

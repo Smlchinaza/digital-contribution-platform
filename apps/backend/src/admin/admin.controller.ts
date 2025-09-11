@@ -39,6 +39,20 @@ export class AdminController {
   async transactionsList() {
     return this.transactions;
   }
+
+  @Patch('users/:id/promote')
+  async promote(@Param('id') id: string) {
+    const userId = Number(id);
+    const user = await this.usersService.setAdminStatus(userId, true);
+    return user;
+  }
+
+  @Patch('users/:id/demote')
+  async demote(@Param('id') id: string) {
+    const userId = Number(id);
+    const user = await this.usersService.setAdminStatus(userId, false);
+    return user;
+  }
 }
 
 

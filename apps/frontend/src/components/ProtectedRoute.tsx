@@ -24,9 +24,7 @@ export function ProtectedRoute({ children, requireAdmin = false }: ProtectedRout
         return;
       }
 
-      // For now, we'll implement a simple admin check
-      // In a real app, you'd check user roles/permissions
-      if (requireAdmin && storedUser.email !== "admin@example.com") {
+      if (requireAdmin && !storedUser?.isAdmin) {
         router.push("/dashboard");
         return;
       }
@@ -44,7 +42,7 @@ export function ProtectedRoute({ children, requireAdmin = false }: ProtectedRout
     );
   }
 
-  if (requireAdmin && user.email !== "admin@example.com") {
+  if (requireAdmin && !user?.isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">

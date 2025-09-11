@@ -2,7 +2,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "../providers/AuthProvider";
-import ChurchLogo from "../images/Church logo.jpg";
 
 export function Header() {
   const { user, logout } = useAuth();
@@ -12,7 +11,7 @@ export function Header() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2">
-              <Image src={ChurchLogo} alt="Church logo" width={40} height={40} className="rounded-md object-cover" />
+              <Image src="/images/church-logo.jpg" alt="Church logo" width={40} height={40} className="rounded-md object-cover" />
               <span className="sr-only">Home</span>
             </Link>
             <nav className="hidden md:flex gap-6">

@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useMemo, useState, useCallback } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, useCallback, useRef } from "react";
 import { apiService } from "../services/api";
 import type { User } from "../types/user";
 
@@ -22,29 +22,29 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [inactivityTimer, setInactivityTimer] = useState<NodeJS.Timeout>();
+  const inactivityTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const logout = useCallback(() => {
     setToken(null);
     setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    if (inactivityTimer) {
-      clearTimeout(inactivityTimer);
+    if (inactivityTimerRef.current) {
+      clearTimeout(inactivityTimerRef.current);
+      inactivityTimerRef.current = null;
     }
-  }, [inactivityTimer]);
+  }, []);
 
   const resetInactivityTimer = useCallback(() => {
-    if (inactivityTimer) {
-      clearTimeout(inactivityTimer);
+    if (inactivityTimerRef.current) {
+      clearTimeout(inactivityTimerRef.current);
     }
     if (token) {
-      const timer = setTimeout(() => {
+      inactivityTimerRef.current = setTimeout(() => {
         logout();
       }, 5 * 60 * 1000); // 5 minutes
-      setInactivityTimer(timer);
     }
-  }, [token, inactivityTimer, logout]);
+  }, [token, logout]);
 
   useEffect(() => {
     const t = localStorage.getItem("token");
@@ -58,11 +58,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       resetInactivityTimer();
     }
     return () => {
-      if (inactivityTimer) {
-        clearTimeout(inactivityTimer);
+      if (inactivityTimerRef.current) {
+        clearTimeout(inactivityTimerRef.current);
+        inactivityTimerRef.current = null;
       }
     };
-  }, [token, resetInactivityTimer, inactivityTimer]);
+  }, [token, resetInactivityTimer]);
 
   useEffect(() => {
     // Set up event listeners for user activity

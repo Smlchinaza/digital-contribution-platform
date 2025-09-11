@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useAuth } from "../providers/AuthProvider";
+import { API_BASE_URL } from "../services/api";
 
 type PlanType = "weekly" | "monthly";
 
@@ -26,7 +27,7 @@ export function Tiers() {
       alert("Please login to create/join a group.");
       return;
     }
-    const res = await fetch("http://localhost:3001/groups", {
+    const res = await fetch(`${API_BASE_URL}/groups`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

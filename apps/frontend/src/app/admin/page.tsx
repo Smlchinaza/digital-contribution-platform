@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
+import { API_BASE_URL } from "../../services/api";
 
 export default function AdminOverviewPage() {
   const { token } = useAuth();
@@ -10,9 +11,9 @@ export default function AdminOverviewPage() {
     async function load() {
       if (!token) return;
       const [users, groups, tx] = await Promise.all([
-        fetch("http://localhost:3001/admin/users", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
-        fetch("http://localhost:3001/admin/groups", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
-        fetch("http://localhost:3001/admin/transactions", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
+        fetch(`${API_BASE_URL}/admin/users`, { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
+        fetch(`${API_BASE_URL}/admin/groups`, { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
+        fetch(`${API_BASE_URL}/admin/transactions`, { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
       ]);
       setStats({ users: users.length, groups: groups.length, transactions: tx.length });
     }
@@ -30,6 +31,7 @@ export default function AdminOverviewPage() {
     </div>
   );
 }
+
 
 
 

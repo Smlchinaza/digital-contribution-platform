@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useAuth } from "../providers/AuthProvider";
+import { API_BASE_URL } from "../services/api";
 
 export function Sidebar() {
   const { token } = useAuth();
@@ -9,7 +10,7 @@ export function Sidebar() {
   useEffect(() => {
     async function fetchGroups() {
       if (!token) return;
-      const res = await fetch("http://localhost:3001/groups", {
+      const res = await fetch(`${API_BASE_URL}/groups`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -52,6 +53,7 @@ export function Sidebar() {
     </aside>
   );
 }
+
 
 
 

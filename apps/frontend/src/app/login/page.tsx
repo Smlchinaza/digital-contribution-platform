@@ -73,7 +73,7 @@ export default function LoginPage() {
             <div className="mt-5 flex items-center justify-between text-sm text-white/80">
               <Link href="/" className="hover:text-white">Back to Home</Link>
               <div>
-                Dont have an account? <Link className="text-cyan-300 underline hover:text-cyan-200" href="/register">Sign up</Link>
+                Don't have an account? <Link className="text-cyan-300 underline hover:text-cyan-200" href="/register">Sign up</Link>
               </div>
             </div>
           </div>

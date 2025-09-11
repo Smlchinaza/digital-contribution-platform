@@ -144,6 +144,33 @@ class ApiService {
     });
     return this.handleResponse<Group>(response);
   }
+
+  // User dashboard endpoints
+  async getMyGroups(): Promise<Group[]> {
+    const response = await fetch(`${API_BASE_URL}/groups/my-groups`, {
+      headers: this.getAuthHeaders(),
+    });
+    return this.handleResponse<Group[]>(response);
+  }
+
+  async getMyContributions(): Promise<{
+    groups: Group[];
+    totalContributed: number;
+    totalReceived: number;
+    pendingContributions: number;
+    nextPayouts: Array<{
+      groupId: string;
+      groupTitle: string;
+      amount: number;
+      position: number;
+      estimatedDate: string;
+    }>;
+  }> {
+    const response = await fetch(`${API_BASE_URL}/groups/my-contributions`, {
+      headers: this.getAuthHeaders(),
+    });
+    return this.handleResponse(response);
+  }
 }
 
 export const apiService = new ApiService();

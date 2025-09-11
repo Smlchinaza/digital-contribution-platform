@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { GroupsService, ContributionAmount, PlanType } from './groups.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { AdminGuard } from '../admin/admin.guard';
 import { CurrentUser } from '../shared/current-user.decorator';
 
 @Controller('groups')
@@ -14,6 +15,7 @@ export class GroupsController {
   }
 
   @Post()
+  @UseGuards(AdminGuard)
   create(@Body() body: { title: string; amount: ContributionAmount; plan: PlanType }) {
     return this.groupsService.createGroup(body);
   }
@@ -31,6 +33,16 @@ export class GroupsController {
   @Patch(':id/mark-paid')
   markPaid(@Param('id') id: string) {
     return this.groupsService.markPayoutComplete(id);
+  }
+
+  @Get('my-groups')
+  myGroups(@CurrentUser() user: { userId: string }) {
+    return this.groupsService.getUserGroups(user.userId);
+  }
+
+  @Get('my-contributions')
+  myContributions(@CurrentUser() user: { userId: string }) {
+    return this.groupsService.getUserContributions(user.userId);
   }
 }
 

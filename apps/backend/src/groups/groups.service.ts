@@ -100,6 +100,97 @@ export class GroupsService {
     }
     return group;
   }
+
+  async getUserGroups(userId: string): Promise<Group[]> {
+    return this.groups.filter(group => 
+      group.members.some(member => member.userId === userId)
+    );
+  }
+
+  async getUserContributions(userId: string): Promise<{
+    groups: Group[];
+    totalContributed: number;
+    totalReceived: number;
+    pendingContributions: number;
+    nextPayouts: Array<{
+      groupId: string;
+      groupTitle: string;
+      amount: number;
+      position: number;
+      estimatedDate: string;
+    }>;
+  }> {
+    const userGroups = await this.getUserGroups(userId);
+    let totalContributed = 0;
+    let totalReceived = 0;
+    let pendingContributions = 0;
+    const nextPayouts: Array<{
+      groupId: string;
+      groupTitle: string;
+      amount: number;
+      position: number;
+      estimatedDate: string;
+    }> = [];
+
+    for (const group of userGroups) {
+      const userMember = group.members.find(m => m.userId === userId);
+      if (!userMember) continue;
+
+      // Calculate contributions based on cycles completed
+      const cyclesCompleted = group.currentCycle - 1;
+      const userContribution = cyclesCompleted * group.amount;
+      totalContributed += userContribution;
+
+      // Check if user has received payout
+      if (userMember.hasReceived) {
+        const feePercent = this.feeFor(group.plan);
+        const totalContributors = group.members.length;
+        const gross = totalContributors * group.amount;
+        const fee = gross * feePercent;
+        const payout = Math.round(gross - fee);
+        totalReceived += payout;
+      }
+
+      // Calculate pending contributions
+      if (group.currentCycle <= userMember.position) {
+        pendingContributions += group.amount;
+      }
+
+      // Add to next payouts if user hasn't received yet
+      if (!userMember.hasReceived) {
+        const feePercent = this.feeFor(group.plan);
+        const totalContributors = group.members.length;
+        const gross = totalContributors * group.amount;
+        const fee = gross * feePercent;
+        const payout = Math.round(gross - fee);
+        
+        // Estimate payout date based on position and plan
+        const weeksUntilPayout = userMember.position - group.currentCycle;
+        const estimatedDate = new Date();
+        if (group.plan === 'weekly') {
+          estimatedDate.setDate(estimatedDate.getDate() + (weeksUntilPayout * 7));
+        } else {
+          estimatedDate.setMonth(estimatedDate.getMonth() + weeksUntilPayout);
+        }
+
+        nextPayouts.push({
+          groupId: group.id,
+          groupTitle: group.title,
+          amount: payout,
+          position: userMember.position,
+          estimatedDate: estimatedDate.toISOString().split('T')[0]
+        });
+      }
+    }
+
+    return {
+      groups: userGroups,
+      totalContributed,
+      totalReceived,
+      pendingContributions,
+      nextPayouts: nextPayouts.sort((a, b) => new Date(a.estimatedDate).getTime() - new Date(b.estimatedDate).getTime())
+    };
+  }
 }
 
 

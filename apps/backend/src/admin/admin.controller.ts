@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Patch, UseGuards, Body } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { GroupsService } from '../groups/groups.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -51,6 +51,18 @@ export class AdminController {
   async demote(@Param('id') id: string) {
     const userId = Number(id);
     const user = await this.usersService.setAdminStatus(userId, false);
+    return user;
+  }
+
+  @Patch('users/promote-by-email')
+  async promoteByEmail(@Body() body: { email: string }) {
+    const user = await this.usersService.setAdminStatusByEmail(body.email, true);
+    return user;
+  }
+
+  @Patch('users/demote-by-email')
+  async demoteByEmail(@Body() body: { email: string }) {
+    const user = await this.usersService.setAdminStatusByEmail(body.email, false);
     return user;
   }
 }

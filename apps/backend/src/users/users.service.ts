@@ -37,4 +37,11 @@ export class UsersService {
       data: { isAdmin },
     });
   }
+
+  async setAdminStatusByEmail(email: string, isAdmin: boolean): Promise<User> {
+    return this.prisma.user.update({
+      where: { email: email.toLowerCase() },
+      data: { isAdmin },
+    });
+  }
 }

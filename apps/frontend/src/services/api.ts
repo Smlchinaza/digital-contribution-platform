@@ -123,6 +123,24 @@ class ApiService {
     return this.handleResponse<User>(response);
   }
 
+  async promoteUserByEmail(email: string): Promise<User> {
+    const response = await fetch(`${API_BASE_URL}/admin/users/promote-by-email`, {
+      method: 'PATCH',
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify({ email }),
+    });
+    return this.handleResponse<User>(response);
+  }
+
+  async demoteUserByEmail(email: string): Promise<User> {
+    const response = await fetch(`${API_BASE_URL}/admin/users/demote-by-email`, {
+      method: 'PATCH',
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify({ email }),
+    });
+    return this.handleResponse<User>(response);
+  }
+
   async getAdminGroups(): Promise<Group[]> {
     const response = await fetch(`${API_BASE_URL}/admin/groups`, {
       headers: this.getAuthHeaders(),

@@ -8,7 +8,8 @@ import {
   UseGuards,
   ParseIntPipe 
 } from '@nestjs/common';
-import { PaymentsService, CreatePaymentDto, UpdatePaymentStatusDto } from './payments.service';
+import { PaymentsService } from './payments.service';
+import type { CreatePaymentDto, UpdatePaymentStatusDto } from './payments.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AdminGuard } from '../admin/admin.guard';
 import { CurrentUser } from '../shared/current-user.decorator';

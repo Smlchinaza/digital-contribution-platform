@@ -30,7 +30,7 @@ export function Header() {
               <>
                 <span className="text-white/80">Welcome, {user.fullName}</span>
                 <Link className="text-white/80 hover:text-white transition" href="/profile">Profile</Link>
-                {user.email === "admin@example.com" && (
+                {user.isAdmin && (
                   <Link className="text-white/80 hover:text-white transition" href="/admin">Admin</Link>
                 )}
                 <button 

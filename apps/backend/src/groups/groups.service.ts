@@ -107,6 +107,61 @@ export class GroupsService {
     );
   }
 
+  async addUserToGroup(groupId: string, userId: string, position?: number): Promise<Group> {
+    const group = await this.getGroup(groupId);
+    
+    // Check if user is already in the group
+    if (group.members.some((m) => m.userId === userId)) {
+      throw new BadRequestException('User is already in this group');
+    }
+    
+    // Check if group is full
+    if (group.members.length >= 7) {
+      throw new BadRequestException('Group is full');
+    }
+    
+    // If position is provided, check if it's valid and available
+    if (position !== undefined) {
+      if (position < 1 || position > 7) {
+        throw new BadRequestException('Position must be between 1 and 7');
+      }
+      if (group.members.some((m) => m.position === position)) {
+        throw new BadRequestException('Position is already taken');
+      }
+    } else {
+      // Auto-assign next available position
+      position = group.members.length + 1;
+    }
+    
+    group.members.push({ userId, position, hasReceived: false });
+    return group;
+  }
+
+  async removeUserFromGroup(groupId: string, userId: string): Promise<Group> {
+    const group = await this.getGroup(groupId);
+    const memberIndex = group.members.findIndex((m) => m.userId === userId);
+    
+    if (memberIndex === -1) {
+      throw new BadRequestException('User is not in this group');
+    }
+    
+    group.members.splice(memberIndex, 1);
+    return group;
+  }
+
+  async assignNextPayout(groupId: string, userId: string): Promise<Group> {
+    const group = await this.getGroup(groupId);
+    const member = group.members.find((m) => m.userId === userId);
+    
+    if (!member) {
+      throw new BadRequestException('User is not in this group');
+    }
+    
+    // Set the current cycle to this user's position
+    group.currentCycle = member.position;
+    return group;
+  }
+
   async getUserContributions(userId: string): Promise<{
     groups: Group[];
     totalContributed: number;

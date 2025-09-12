@@ -9,6 +9,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <a className="border px-3 py-2" href="/admin">Overview</a>
             <a className="border px-3 py-2" href="/admin/users">Users</a>
             <a className="border px-3 py-2" href="/admin/groups">Groups</a>
+            <a className="border px-3 py-2" href="/admin/payments">Payments</a>
             <a className="border px-3 py-2" href="/admin/transactions">Transactions</a>
           </nav>
           {children}

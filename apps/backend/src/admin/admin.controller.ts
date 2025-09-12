@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Patch, UseGuards, Body } from '@nestjs/common';
+import { Controller, Get, Param, Patch, Post, Delete, UseGuards, Body } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { GroupsService } from '../groups/groups.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -64,6 +64,31 @@ export class AdminController {
   async demoteByEmail(@Body() body: { email: string }) {
     const user = await this.usersService.setAdminStatusByEmail(body.email, false);
     return user;
+  }
+
+  // Group management endpoints
+  @Post('groups/:groupId/add-user')
+  async addUserToGroup(
+    @Param('groupId') groupId: string,
+    @Body() body: { userId: string; position?: number }
+  ) {
+    return this.groupsService.addUserToGroup(groupId, body.userId, body.position);
+  }
+
+  @Delete('groups/:groupId/remove-user')
+  async removeUserFromGroup(
+    @Param('groupId') groupId: string,
+    @Body() body: { userId: string }
+  ) {
+    return this.groupsService.removeUserFromGroup(groupId, body.userId);
+  }
+
+  @Patch('groups/:groupId/assign-payout')
+  async assignNextPayout(
+    @Param('groupId') groupId: string,
+    @Body() body: { userId: string }
+  ) {
+    return this.groupsService.assignNextPayout(groupId, body.userId);
   }
 }
 

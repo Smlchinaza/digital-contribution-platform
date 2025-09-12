@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../providers/AuthProvider";
 import { apiService } from "../../services/api";
 import { Group } from "../../types/group";
+import { Payment } from "../../types/payment";
 import { ProtectedRoute } from "../../components/ProtectedRoute";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
 import { ErrorMessage } from "../../components/ErrorMessage";
@@ -10,6 +11,7 @@ import { CurrentGroups } from "../../components/dashboard/CurrentGroups";
 import { ContributionStatus } from "../../components/dashboard/ContributionStatus";
 import { PayoutSchedule } from "../../components/dashboard/PayoutSchedule";
 import { BalanceHistory } from "../../components/dashboard/BalanceHistory";
+import { PaymentForm } from "../../components/PaymentForm";
 import Link from "next/link";
 
 export default function DashboardPage() {
@@ -33,20 +35,25 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [creating, setCreating] = useState(false);
+  const [myPayments, setMyPayments] = useState<Payment[]>([]);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [selectedGroupForPayment, setSelectedGroupForPayment] = useState<Group | null>(null);
 
   useEffect(() => {
     async function fetchDashboardData() {
       if (!token) return;
       setLoading(true);
       try {
-        const [allGroups, myGroupsData, contributionsData] = await Promise.all([
+        const [allGroups, myGroupsData, contributionsData, paymentsData] = await Promise.all([
           apiService.getGroups(),
           apiService.getMyGroups(),
-          apiService.getMyContributions()
+          apiService.getMyContributions(),
+          apiService.getMyPayments()
         ]);
         setGroups(allGroups);
         setMyGroups(myGroupsData);
         setContributions(contributionsData);
+        setMyPayments(paymentsData);
       } catch (e: any) {
         setError(e.message);
       } finally {
@@ -62,14 +69,16 @@ export default function DashboardPage() {
       await apiService.joinGroup(id);
       alert("Joined group successfully!");
       // Refresh all data
-      const [allGroups, myGroupsData, contributionsData] = await Promise.all([
+      const [allGroups, myGroupsData, contributionsData, paymentsData] = await Promise.all([
         apiService.getGroups(),
         apiService.getMyGroups(),
-        apiService.getMyContributions()
+        apiService.getMyContributions(),
+        apiService.getMyPayments()
       ]);
       setGroups(allGroups);
       setMyGroups(myGroupsData);
       setContributions(contributionsData);
+      setMyPayments(paymentsData);
     } catch (e: any) {
       alert(`Failed to join group: ${e.message}`);
     }
@@ -87,19 +96,42 @@ export default function DashboardPage() {
       setShowCreateForm(false);
       
       // Refresh all data
-      const [allGroups, myGroupsData, contributionsData] = await Promise.all([
+      const [allGroups, myGroupsData, contributionsData, paymentsData] = await Promise.all([
         apiService.getGroups(),
         apiService.getMyGroups(),
-        apiService.getMyContributions()
+        apiService.getMyContributions(),
+        apiService.getMyPayments()
       ]);
       setGroups(allGroups);
       setMyGroups(myGroupsData);
       setContributions(contributionsData);
+      setMyPayments(paymentsData);
     } catch (e: any) {
       alert(`Failed to create group: ${e.message}`);
     } finally {
       setCreating(false);
     }
+  }
+
+  function handlePaymentSuccess() {
+    setShowPaymentForm(false);
+    setSelectedGroupForPayment(null);
+    // Refresh payments data
+    apiService.getMyPayments().then(setMyPayments).catch(console.error);
+  }
+
+  function handlePaymentCancel() {
+    setShowPaymentForm(false);
+    setSelectedGroupForPayment(null);
+  }
+
+  function openPaymentForm(group: Group) {
+    setSelectedGroupForPayment(group);
+    setShowPaymentForm(true);
+  }
+
+  function getPaymentStatusForGroup(groupId: string) {
+    return myPayments.find(p => p.groupId.toString() === groupId);
   }
 
   // Generate mock transaction history for now
@@ -279,6 +311,7 @@ export default function DashboardPage() {
                   <div className="grid md:grid-cols-2 gap-4">
                     {groups.map((group) => {
                       const isJoined = myGroups.some(g => g.id === group.id);
+                      const paymentStatus = getPaymentStatusForGroup(group.id);
                       return (
                         <div key={group.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
                           <h3 className="font-semibold text-lg">{group.title}</h3>
@@ -300,11 +333,42 @@ export default function DashboardPage() {
                               <p className="font-medium">{group.currentCycle}/7</p>
                             </div>
                           </div>
-                          <div className="mt-3">
-                            {isJoined ? (
-                              <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                                Joined
+                          
+                          {/* Payment Status */}
+                          {isJoined && paymentStatus && (
+                            <div className="mt-2">
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                paymentStatus.status === 'approved' 
+                                  ? 'bg-green-100 text-green-800'
+                                  : paymentStatus.status === 'rejected'
+                                  ? 'bg-red-100 text-red-800'
+                                  : 'bg-yellow-100 text-yellow-800'
+                              }`}>
+                                Payment {paymentStatus.status}
                               </span>
+                            </div>
+                          )}
+
+                          <div className="mt-3 flex gap-2">
+                            {isJoined ? (
+                              <>
+                                {!paymentStatus || paymentStatus.status === 'rejected' ? (
+                                  <button 
+                                    onClick={() => openPaymentForm(group)}
+                                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                                  >
+                                    Make Payment
+                                  </button>
+                                ) : paymentStatus.status === 'pending' ? (
+                                  <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
+                                    Payment Pending
+                                  </span>
+                                ) : (
+                                  <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                                    Payment Approved
+                                  </span>
+                                )}
+                              </>
                             ) : (
                               <button 
                                 onClick={() => join(group.id)}
@@ -324,6 +388,15 @@ export default function DashboardPage() {
           )}
         </div>
       </div>
+
+      {/* Payment Form Modal */}
+      {showPaymentForm && selectedGroupForPayment && (
+        <PaymentForm
+          group={selectedGroupForPayment}
+          onSuccess={handlePaymentSuccess}
+          onCancel={handlePaymentCancel}
+        />
+      )}
     </ProtectedRoute>
   );
 }

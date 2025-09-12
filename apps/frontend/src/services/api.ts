@@ -2,6 +2,7 @@ import { Group } from '../types/group';
 import { PayoutInfo } from '../types/payout';
 import { Transaction } from '../types/transaction';
 import { User } from '../types/user';
+import { Payment, CreatePaymentDto, UpdatePaymentStatusDto } from '../types/payment';
 
 export const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001';
@@ -188,6 +189,81 @@ class ApiService {
       headers: this.getAuthHeaders(),
     });
     return this.handleResponse(response);
+  }
+
+  // Payment endpoints
+  async createPayment(data: CreatePaymentDto): Promise<Payment> {
+    const response = await fetch(`${API_BASE_URL}/payments`, {
+      method: 'POST',
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    return this.handleResponse<Payment>(response);
+  }
+
+  async getMyPayments(): Promise<Payment[]> {
+    const response = await fetch(`${API_BASE_URL}/payments/my-payments`, {
+      headers: this.getAuthHeaders(),
+    });
+    return this.handleResponse<Payment[]>(response);
+  }
+
+  async getAllPayments(): Promise<Payment[]> {
+    const response = await fetch(`${API_BASE_URL}/payments`, {
+      headers: this.getAuthHeaders(),
+    });
+    return this.handleResponse<Payment[]>(response);
+  }
+
+  async getPendingPayments(): Promise<Payment[]> {
+    const response = await fetch(`${API_BASE_URL}/payments/pending`, {
+      headers: this.getAuthHeaders(),
+    });
+    return this.handleResponse<Payment[]>(response);
+  }
+
+  async getPaymentById(paymentId: number): Promise<Payment> {
+    const response = await fetch(`${API_BASE_URL}/payments/${paymentId}`, {
+      headers: this.getAuthHeaders(),
+    });
+    return this.handleResponse<Payment>(response);
+  }
+
+  async updatePaymentStatus(paymentId: number, data: UpdatePaymentStatusDto): Promise<Payment> {
+    const response = await fetch(`${API_BASE_URL}/payments/${paymentId}/status`, {
+      method: 'PATCH',
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    return this.handleResponse<Payment>(response);
+  }
+
+  // Admin group management endpoints
+  async addUserToGroup(groupId: string, userId: string, position?: number): Promise<Group> {
+    const response = await fetch(`${API_BASE_URL}/admin/groups/${groupId}/add-user`, {
+      method: 'POST',
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify({ userId, position }),
+    });
+    return this.handleResponse<Group>(response);
+  }
+
+  async removeUserFromGroup(groupId: string, userId: string): Promise<Group> {
+    const response = await fetch(`${API_BASE_URL}/admin/groups/${groupId}/remove-user`, {
+      method: 'DELETE',
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify({ userId }),
+    });
+    return this.handleResponse<Group>(response);
+  }
+
+  async assignNextPayout(groupId: string, userId: string): Promise<Group> {
+    const response = await fetch(`${API_BASE_URL}/admin/groups/${groupId}/assign-payout`, {
+      method: 'PATCH',
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify({ userId }),
+    });
+    return this.handleResponse<Group>(response);
   }
 }
 

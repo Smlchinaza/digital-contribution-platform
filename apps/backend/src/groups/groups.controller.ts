@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UseGuards, Delete } from '@nestjs/common';
 import { GroupsService, ContributionAmount, PlanType } from './groups.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AdminGuard } from '../admin/admin.guard';
@@ -33,6 +33,12 @@ export class GroupsController {
   @Patch(':id/mark-paid')
   markPaid(@Param('id') id: string) {
     return this.groupsService.markPayoutComplete(id);
+  }
+
+  @Delete(':id')
+  @UseGuards(AdminGuard)
+  delete(@Param('id') id: string) {
+    return this.groupsService.deleteGroup(id);
   }
 
   @Get('my-groups')

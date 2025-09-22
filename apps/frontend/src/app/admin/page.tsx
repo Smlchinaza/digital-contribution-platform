@@ -71,7 +71,7 @@ export default function AdminOverviewPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="group relative">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-300"></div>
           <div className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-cyan-500/30 rounded-2xl p-6 hover:border-cyan-400/50 transition-all duration-300">
@@ -136,9 +136,9 @@ export default function AdminOverviewPage() {
       {/* Admin Management Section */}
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-r from-slate-800/30 to-slate-900/30 rounded-3xl backdrop-blur-sm border border-slate-600/20"></div>
-        <div className="relative p-8">
+        <div className="relative p-4 sm:p-8">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-2">
+            <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-2">
               User Management
             </h2>
             <p className="text-slate-400">Promote or demote users to/from admin status</p>
@@ -148,30 +148,28 @@ export default function AdminOverviewPage() {
             {/* Promote Form */}
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-2xl"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-green-500/30 rounded-2xl p-6">
-                <form onSubmit={handlePromoteByEmail}>
-                  <div className="flex gap-4">
-                    <div className="flex-1">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter user email address"
-                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300"
-                        required
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl hover:from-green-500 hover:to-emerald-500 disabled:opacity-50 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 hover:scale-105"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
-                      </svg>
-                      {loading ? "Processing..." : "Promote"}
-                    </button>
+              <div className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-green-500/30 rounded-2xl p-4 sm:p-6">
+                <form onSubmit={handlePromoteByEmail} className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex-1">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter user email address"
+                      className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:border-green-500/50 transition-all duration-300 text-sm sm:text-base"
+                      required
+                    />
                   </div>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl hover:from-green-500 hover:to-emerald-500 disabled:opacity-50 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 hover:scale-105 text-sm sm:text-base"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
+                    </svg>
+                    {loading ? "Processing..." : "Promote"}
+                  </button>
                 </form>
               </div>
             </div>
@@ -179,30 +177,28 @@ export default function AdminOverviewPage() {
             {/* Demote Form */}
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-pink-500/10 rounded-2xl"></div>
-              <div className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-red-500/30 rounded-2xl p-6">
-                <form onSubmit={handleDemoteByEmail}>
-                  <div className="flex gap-4">
-                    <div className="flex-1">
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter user email address"
-                        className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all duration-300"
-                        required
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-xl hover:from-red-500 hover:to-pink-500 disabled:opacity-50 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-red-500/25 hover:shadow-red-500/40 hover:scale-105"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 13l-5 5m0 0l-5-5m5 5V6" />
-                      </svg>
-                      {loading ? "Processing..." : "Demote"}
-                    </button>
+              <div className="relative bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-red-500/30 rounded-2xl p-4 sm:p-6">
+                <form onSubmit={handleDemoteByEmail} className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex-1">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter user email address"
+                      className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all duration-300 text-sm sm:text-base"
+                      required
+                    />
                   </div>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-red-600 to-pink-600 text-white rounded-xl hover:from-red-500 hover:to-pink-500 disabled:opacity-50 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-red-500/25 hover:shadow-red-500/40 hover:scale-105 text-sm sm:text-base"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 13l-5 5m0 0l-5-5m5 5V6" />
+                    </svg>
+                    {loading ? "Processing..." : "Demote"}
+                  </button>
                 </form>
               </div>
             </div>

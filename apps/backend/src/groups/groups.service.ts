@@ -246,6 +246,15 @@ export class GroupsService {
       nextPayouts: nextPayouts.sort((a, b) => new Date(a.estimatedDate).getTime() - new Date(b.estimatedDate).getTime())
     };
   }
+
+  async deleteGroup(groupId: string): Promise<{ success: boolean }> {
+    const index = this.groups.findIndex((g) => g.id === groupId);
+    if (index === -1) {
+      throw new NotFoundException('Group not found');
+    }
+    this.groups.splice(index, 1);
+    return { success: true };
+  }
 }
 
 

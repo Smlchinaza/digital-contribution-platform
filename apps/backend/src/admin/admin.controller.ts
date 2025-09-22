@@ -90,6 +90,11 @@ export class AdminController {
   ) {
     return this.groupsService.assignNextPayout(groupId, body.userId);
   }
+
+  @Delete('groups/:id')
+  async deleteGroup(@Param('id') id: string) {
+    return this.groupsService.deleteGroup(id);
+  }
 }
 
 

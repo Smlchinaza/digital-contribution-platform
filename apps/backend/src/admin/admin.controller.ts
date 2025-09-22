@@ -88,7 +88,7 @@ export class AdminController {
     @Param('groupId') groupId: string,
     @Body() body: { userId: string }
   ) {
-    return this.groupsService.assignNextPayout(groupId, body.userId);
+    return this.groupsService.assignNextPayout(groupId, Number(body.userId));
   }
 
   @Delete('groups/:id')

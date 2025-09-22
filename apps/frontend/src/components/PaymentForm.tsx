@@ -117,7 +117,7 @@ export function PaymentForm({ group, onSuccess, onCancel }: PaymentFormProps) {
           {/* Contribution Account Details */}
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <h3 className="text-lg font-semibold text-blue-900 mb-3">Payment Details</h3>
-            <div className="space-y-2 text-sm">
+            <div className="space-y-2 text-sm text-gray-900">
               <div className="flex justify-between">
                 <span className="font-medium text-blue-800">Account Name:</span>
                 <span className="text-blue-700">{contributionAccount.accountName}</span>
@@ -136,7 +136,7 @@ export function PaymentForm({ group, onSuccess, onCancel }: PaymentFormProps) {
           {/* Group Information */}
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Group Information</h3>
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-2 gap-4 text-sm text-gray-900">
               <div>
                 <span className="font-medium text-gray-600">Group:</span>
                 <p className="text-gray-900">{group.title}</p>
@@ -157,9 +157,9 @@ export function PaymentForm({ group, onSuccess, onCancel }: PaymentFormProps) {
           </div>
 
           {/* Payment Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 text-gray-900">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-900 mb-1">
                 Amount Paid (₦)
               </label>
               <input
@@ -168,13 +168,13 @@ export function PaymentForm({ group, onSuccess, onCancel }: PaymentFormProps) {
                 value={formData.amount}
                 onChange={handleInputChange}
                 required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                 placeholder="Enter amount paid"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-900 mb-1">
                 Your Bank Name
               </label>
               <input
@@ -183,13 +183,13 @@ export function PaymentForm({ group, onSuccess, onCancel }: PaymentFormProps) {
                 value={formData.userBankName}
                 onChange={handleInputChange}
                 required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                 placeholder="e.g., Access Bank, GTBank, etc."
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-900 mb-1">
                 Your Account Name
               </label>
               <input
@@ -198,13 +198,13 @@ export function PaymentForm({ group, onSuccess, onCancel }: PaymentFormProps) {
                 value={formData.userAccountName}
                 onChange={handleInputChange}
                 required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                 placeholder="Enter your account name"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-900 mb-1">
                 Your Account Number
               </label>
               <input
@@ -213,20 +213,20 @@ export function PaymentForm({ group, onSuccess, onCancel }: PaymentFormProps) {
                 value={formData.userAccountNumber}
                 onChange={handleInputChange}
                 required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
                 placeholder="Enter your account number"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-900 mb-1">
                 Payment Receipt (Optional)
               </label>
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900"
               />
               {receiptFile && (
                 <p className="text-sm text-green-600 mt-1">
@@ -245,7 +245,7 @@ export function PaymentForm({ group, onSuccess, onCancel }: PaymentFormProps) {
               <button
                 type="button"
                 onClick={onCancel}
-                className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                className="flex-1 px-4 py-3 border border-gray-300 text-gray-900 rounded-lg hover:bg-gray-50 transition-colors"
               >
                 Cancel
               </button>

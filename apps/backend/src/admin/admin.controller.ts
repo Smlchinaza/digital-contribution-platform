@@ -55,13 +55,13 @@ export class AdminController {
   }
 
   @Patch('users/promote-by-email')
-  async promoteByEmail(@Body() body: { email: string }) {
+  async promoteByEmail(@Body() body: any) {
     const user = await this.usersService.setAdminStatusByEmail(body.email, true);
     return user;
   }
 
   @Patch('users/demote-by-email')
-  async demoteByEmail(@Body() body: { email: string }) {
+  async demoteByEmail(@Body() body: any) {
     const user = await this.usersService.setAdminStatusByEmail(body.email, false);
     return user;
   }
@@ -70,7 +70,7 @@ export class AdminController {
   @Post('groups/:groupId/add-user')
   async addUserToGroup(
     @Param('groupId') groupId: string,
-    @Body() body: { userId: string; position?: number }
+    @Body() body: any
   ) {
     return this.groupsService.addUserToGroup(groupId, body.userId, body.position);
   }
@@ -78,7 +78,7 @@ export class AdminController {
   @Delete('groups/:groupId/remove-user')
   async removeUserFromGroup(
     @Param('groupId') groupId: string,
-    @Body() body: { userId: string }
+    @Body() body: any
   ) {
     return this.groupsService.removeUserFromGroup(groupId, body.userId);
   }
@@ -86,7 +86,7 @@ export class AdminController {
   @Patch('groups/:groupId/assign-payout')
   async assignNextPayout(
     @Param('groupId') groupId: string,
-    @Body() body: { userId: string }
+    @Body() body: any
   ) {
     return this.groupsService.assignNextPayout(groupId, body.userId);
   }

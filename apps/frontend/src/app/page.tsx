@@ -43,14 +43,14 @@ export default function ChurchHome() {
               Arise and Shine · Anglican Communion
             </p>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight">
-              Worship in a modern, Christ-centered community
+              Worship in a Christ-centered community
             </h2>
             <p className="mt-4 text-base sm:text-lg text-white/80 max-w-prose">
               We gather to exalt Christ, equip believers, and extend love to our city. Join us in-person or online(soon) and be part of what God is doing.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <Link href="/contrib" className="px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all hover:-translate-y-0.5 text-center">
-                Digital Contributory
+                Digital Contribution
               </Link>
               <Link href="/charity" className="px-6 py-3 rounded-lg border-2 border-white/20 bg-white/10 text-white font-semibold backdrop-blur hover:bg-white/15 transition-all text-center">
                 Charity Form
@@ -83,6 +83,7 @@ export default function ChurchHome() {
           <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/5 p-6 backdrop-blur">
             <h4 className="font-semibold">Service Information</h4>
             <p className="mt-2 text-white/80"><strong className="text-white">Sunday:</strong> 7:00 AM</p>
+            <p className="mt-2 text-white/80"><strong className="text-white">Wednesday:</strong> 5:00 PM</p>
             <p className="text-white/80"><strong className="text-white">Location:</strong> Thinker's Corner</p>
             <p className="text-white/80"><strong className="text-white">Parking:</strong> Available</p>
           </div>

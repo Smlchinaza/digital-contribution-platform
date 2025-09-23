@@ -15,17 +15,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.stpetersthinkerscorner.com"),
-  title: "St Peter's Anglican Church, Thinker's Corner, Enugu",
+  title: "St Peter's Anglican Church, Thinkers Corner, Enugu",
   description: "Welcome to Mount Zion, Our ultimate goal is to make you eat the undiluted word of God, to enable you grow to maturity in Christ Jesus.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "St Peter's Anglican Church, Thinker's Corner, Enugu",
+    title: "St Peter's Anglican Church, Thinkers Corner, Enugu",
     description: "Welcome to Mount Zion, Our ultimate goal is to make you eat the undiluted word of God, to enable you grow to maturity in Christ Jesus.",
     type: "website",
     url: "/",
-    siteName: "St Peter's Anglican Church, Thinker's Corner, Enugu",
+    siteName: "St Peter's Anglican Church, Thinkers Corner, Enugu",
     locale: "en_US",
     images: [
       {
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "St Peter's Anglican Church, Thinker's Corner, Enugu",
+    title: "St Peter's Anglican Church, Thinkers Corner, Enugu",
     description: "Welcome to Mount Zion, Our ultimate goal is to make you eat the undiluted word of God, to enable you grow to maturity in Christ Jesus.",
     images: ["/images/church-logo.jpg"],
   },

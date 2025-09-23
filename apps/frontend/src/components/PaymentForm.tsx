@@ -24,9 +24,9 @@ export function PaymentForm({ group, onSuccess, onCancel }: PaymentFormProps) {
 
   // Contribution account details (these would typically come from environment variables or admin settings)
   const contributionAccount = {
-    accountName: "DIGITAL CONTRIBUTION PLATFORM",
-    accountNumber: "1234567890",
-    bankName: "ACCESS BANK PLC"
+    accountName: "ST PETERS ANGLICAN CHURCH, THINKERS CORNER, ENUGU",
+    accountNumber: "1021466743",
+    bankName: "UNITED BANK FOR AFRICA (UBA)"
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -82,7 +82,7 @@ export function PaymentForm({ group, onSuccess, onCancel }: PaymentFormProps) {
       }
 
       const paymentData: CreatePaymentDto = {
-        groupId: parseInt(group.id),
+        groupId: group.id,
         amount: formData.amount,
         userBankName: formData.userBankName,
         userAccountName: formData.userAccountName,

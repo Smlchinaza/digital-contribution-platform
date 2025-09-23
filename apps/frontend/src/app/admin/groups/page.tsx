@@ -123,19 +123,19 @@ export default function AdminGroupsPage() {
               </div>
               
               {/* Next Payout Info */}
-              {nextPayoutUser && (
+              {nextPayout && nextPayoutUser && (
                 <div className="bg-blue-50 border border-blue-200 rounded p-2 mb-3">
                   <div className="text-xs font-medium text-blue-800">Next Payout:</div>
                   <div className="text-sm text-blue-700">
-                    {nextPayoutUser.fullName} (Position {nextPayout.position})
+                    {nextPayoutUser.fullName} (Position {nextPayout?.position})
                   </div>
                 </div>
               )}
 
               {/* Group Members */}
               <div className="mb-3">
-                <div className="text-xs font-medium text-gray-600 mb-1">Members:</div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs font-medium text-gray-800 mb-1">Members:</div>
+                <div className="text-sm text-gray-800">
                   {g.members?.length ? (
                     g.members.map(member => {
                       const user = users.find(u => u.id === member.userId);
@@ -147,7 +147,7 @@ export default function AdminGroupsPage() {
                       );
                     })
                   ) : (
-                    <span className="text-gray-400">No members</span>
+                    <span className="text-gray-700">No members</span>
                   )}
                 </div>
               </div>
@@ -252,11 +252,11 @@ function UserManagementModal({
           {/* Add User Section */}
           <div className="mb-6 p-4 bg-gray-50 rounded-lg">
             <h4 className="font-medium mb-3">Add User to Group</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-gray-900">
               <select
                 value={selectedUser}
                 onChange={(e) => setSelectedUser(e.target.value ? Number(e.target.value) : '')}
-                className="p-2 border rounded"
+                className="p-2 border rounded text-gray-900"
               >
                 <option value="">Select user...</option>
                 {availableUsers.map(user => (
@@ -268,7 +268,7 @@ function UserManagementModal({
               <select
                 value={selectedPosition || ''}
                 onChange={(e) => setSelectedPosition(e.target.value ? parseInt(e.target.value) : undefined)}
-                className="p-2 border rounded"
+                className="p-2 border rounded text-gray-900"
               >
                 <option value="">Auto position</option>
                 {getAvailablePositions().map(pos => (
@@ -345,18 +345,18 @@ function PayoutAssignmentModal({
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
         <div className="p-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold">Assign Next Payout - {group.title}</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Assign Next Payout - {group.title}</h3>
             <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-2xl">×</button>
           </div>
 
           <div className="mb-4">
-            <p className="text-sm text-gray-600 mb-3">
+            <p className="text-sm text-gray-800 mb-3">
               Select which member should receive the next payout. This will set the current cycle to their position.
             </p>
             <select
               value={selectedUser}
               onChange={(e) => setSelectedUser(e.target.value ? Number(e.target.value) : '')}
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 text-gray-900"
             >
               <option value="">Select member...</option>
               {group.members?.map(member => {

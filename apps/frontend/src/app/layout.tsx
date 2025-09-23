@@ -14,39 +14,39 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.example.com"),
-  title: "My Website Name",
-  description: "A short, compelling description of what my site is about.",
+  metadataBase: new URL("https://stpetersthinkerscorner.com"),
+  title: "St Peter's Anglican Church, Thinker's Corner, Enugu",
+  description: "Welcome to Mount Zion, Our ultimate goal is to make you eat the undiluted word of God, to enable you grow to maturity in Christ Jesus.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "My Website Name",
-    description: "A short, compelling description of what my site is about.",
+    title: "St Peter's Anglican Church, Thinker's Corner, Enugu",
+    description: "Welcome to Mount Zion, Our ultimate goal is to make you eat the undiluted word of God, to enable you grow to maturity in Christ Jesus.",
     type: "website",
     url: "/",
-    siteName: "My Website Name",
+    siteName: "St Peter's Anglican Church, Thinker's Corner, Enugu",
     locale: "en_US",
     images: [
       {
-        url: "/og/hero.jpg",
+        url: "/images/church-logo.jpg",
         width: 1200,
         height: 630,
-        alt: "A descriptive alt text of the hero image",
+        alt: "Church logo",
       },
       {
-        url: "/og/hero.webp",
+        url: "/images/church-logo.jpg",
         width: 1200,
         height: 630,
-        alt: "A descriptive alt text of the hero image (WebP)",
+        alt: "Church logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "My Website Name",
-    description: "A short, compelling description of what my site is about.",
-    images: ["/og/hero.jpg"],
+    title: "St Peter's Anglican Church, Thinker's Corner, Enugu",
+    description: "Welcome to Mount Zion, Our ultimate goal is to make you eat the undiluted word of God, to enable you grow to maturity in Christ Jesus.",
+    images: ["/images/church-logo.jpg"],
   },
   themeColor: "#0ea5e9",
 };

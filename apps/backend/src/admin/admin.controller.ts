@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Patch, Post, Delete, UseGuards, Body } from '@nestjs/common';
+import { Controller, Get, Param, Patch, Post, Delete, UseGuards, Body, ParseIntPipe } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { GroupsService } from '../groups/groups.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -25,12 +25,12 @@ export class AdminController {
   }
 
   @Get('groups/:id/next')
-  async next(@Param('id') id: string) {
+  async next(@Param('id', ParseIntPipe) id: number) {
     return this.groupsService.nextPayout(id);
   }
 
   @Patch('groups/:id/advance')
-  async advance(@Param('id') id: string) {
+  async advance(@Param('id', ParseIntPipe) id: number) {
     const group = await this.groupsService.markPayoutComplete(id);
     return group;
   }
@@ -41,16 +41,14 @@ export class AdminController {
   }
 
   @Patch('users/:id/promote')
-  async promote(@Param('id') id: string) {
-    const userId = Number(id);
-    const user = await this.usersService.setAdminStatus(userId, true);
+  async promote(@Param('id', ParseIntPipe) id: number) {
+    const user = await this.usersService.setAdminStatus(id, true);
     return user;
   }
 
   @Patch('users/:id/demote')
-  async demote(@Param('id') id: string) {
-    const userId = Number(id);
-    const user = await this.usersService.setAdminStatus(userId, false);
+  async demote(@Param('id', ParseIntPipe) id: number) {
+    const user = await this.usersService.setAdminStatus(id, false);
     return user;
   }
 
@@ -69,30 +67,30 @@ export class AdminController {
   // Group management endpoints
   @Post('groups/:groupId/add-user')
   async addUserToGroup(
-    @Param('groupId') groupId: string,
-    @Body() body: any
+    @Param('groupId', ParseIntPipe) groupId: number,
+    @Body() body: { userId: number; position?: number }
   ) {
     return this.groupsService.addUserToGroup(groupId, body.userId, body.position);
   }
 
   @Delete('groups/:groupId/remove-user')
   async removeUserFromGroup(
-    @Param('groupId') groupId: string,
-    @Body() body: any
+    @Param('groupId', ParseIntPipe) groupId: number,
+    @Body() body: { userId: number }
   ) {
     return this.groupsService.removeUserFromGroup(groupId, body.userId);
   }
 
   @Patch('groups/:groupId/assign-payout')
   async assignNextPayout(
-    @Param('groupId') groupId: string,
-    @Body() body: any
+    @Param('groupId', ParseIntPipe) groupId: number,
+    @Body() body: { userId: number }
   ) {
     return this.groupsService.assignNextPayout(groupId, body.userId);
   }
 
   @Delete('groups/:id')
-  async deleteGroup(@Param('id') id: string) {
+  async deleteGroup(@Param('id', ParseIntPipe) id: number) {
     return this.groupsService.deleteGroup(id);
   }
 }

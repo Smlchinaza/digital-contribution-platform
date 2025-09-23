@@ -82,7 +82,7 @@ export default function ChurchHome() {
           </div>
           <div className="rounded-2xl border border-emerald-400/20 bg-emerald-400/5 p-6 backdrop-blur">
             <h4 className="font-semibold">Service Information</h4>
-            <p className="mt-2 text-white/80"><strong className="text-white">Sunday:</strong> 10:30 AM</p>
+            <p className="mt-2 text-white/80"><strong className="text-white">Sunday:</strong> 7:00 AM</p>
             <p className="text-white/80"><strong className="text-white">Location:</strong> Thinker's Corner</p>
             <p className="text-white/80"><strong className="text-white">Parking:</strong> Available</p>
           </div>

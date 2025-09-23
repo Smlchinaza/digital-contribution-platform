@@ -46,7 +46,7 @@ export default function ChurchHome() {
               Worship in a modern, Christ-centered community
             </h2>
             <p className="mt-4 text-base sm:text-lg text-white/80 max-w-prose">
-              We gather to exalt Christ, equip believers, and extend love to our city. Join us in-person or online and be part of what God is doing.
+              We gather to exalt Christ, equip believers, and extend love to our city. Join us in-person or online(soon) and be part of what God is doing.
             </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <Link href="/contrib" className="px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-emerald-500 text-white font-semibold shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all hover:-translate-y-0.5 text-center">

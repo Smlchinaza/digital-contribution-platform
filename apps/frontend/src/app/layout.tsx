@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://stpetersthinkerscorner.com"),
+  metadataBase: new URL("https://www.stpetersthinkerscorner.com"),
   title: "St Peter's Anglican Church, Thinker's Corner, Enugu",
   description: "Welcome to Mount Zion, Our ultimate goal is to make you eat the undiluted word of God, to enable you grow to maturity in Christ Jesus.",
   alternates: {

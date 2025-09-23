@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "../providers/AuthProvider";
@@ -48,6 +48,9 @@ export const metadata: Metadata = {
     description: "Welcome to Mount Zion, Our ultimate goal is to make you eat the undiluted word of God, to enable you grow to maturity in Christ Jesus.",
     images: ["/images/church-logo.jpg"],
   },
+};
+
+export const viewport: Viewport = {
   themeColor: "#0ea5e9",
 };
 

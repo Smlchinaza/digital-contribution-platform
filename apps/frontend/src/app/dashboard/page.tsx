@@ -24,7 +24,7 @@ export default function DashboardPage() {
     totalReceived: number;
     pendingContributions: number;
     nextPayouts: Array<{
-      groupId: string;
+      groupId: number;
       groupTitle: string;
       amount: number;
       position: number;
@@ -44,7 +44,7 @@ export default function DashboardPage() {
       if (!token) return;
       setLoading(true);
       try {
-        const [allGroups, myGroupsData, contributionsData, paymentsData] = await Promise.all([
+      const [allGroups, myGroupsData, contributionsData, paymentsData] = await Promise.all([
           apiService.getGroups(),
           apiService.getMyGroups(),
           apiService.getMyContributions(),
@@ -63,7 +63,7 @@ export default function DashboardPage() {
     fetchDashboardData();
   }, [token]);
 
-  async function join(id: string) {
+  async function join(id: number) {
     if (!token) return;
     try {
       await apiService.joinGroup(id);
@@ -130,8 +130,8 @@ export default function DashboardPage() {
     setShowPaymentForm(true);
   }
 
-  function getPaymentStatusForGroup(groupId: string) {
-    return myPayments.find(p => p.groupId.toString() === groupId);
+  function getPaymentStatusForGroup(groupId: number) {
+    return myPayments.find(p => p.groupId === groupId);
   }
 
   // Generate mock transaction history for now
@@ -441,7 +441,7 @@ export default function DashboardPage() {
                                         onClick={() => openPaymentForm(group)}
                                         className="w-full px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl hover:from-green-500 hover:to-emerald-500 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 hover:scale-105"
                                       >
-                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                                         </svg>
                                         Make Payment

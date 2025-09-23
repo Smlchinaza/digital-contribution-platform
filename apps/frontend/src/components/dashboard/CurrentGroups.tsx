@@ -4,7 +4,7 @@ import { Group } from "../../types/group";
 interface CurrentGroupsProps {
   groups: Group[];
   loading: boolean;
-  onJoinGroup: (groupId: string) => void;
+  onJoinGroup: (groupId: number) => void;
 }
 
 export function CurrentGroups({ groups, loading, onJoinGroup }: CurrentGroupsProps) {

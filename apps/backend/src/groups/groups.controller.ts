@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UseGuards, Delete, ParseIntPipe } from '@nestjs/common';
 import { GroupsService, ContributionAmount, PlanType } from './groups.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AdminGuard } from '../admin/admin.guard';
@@ -21,33 +21,33 @@ export class GroupsController {
   }
 
   @Post(':id/join')
-  join(@Param('id') id: string, @CurrentUser() user: { userId: string }) {
+  join(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: { userId: number }) {
     return this.groupsService.joinGroup(id, user.userId);
   }
 
   @Get(':id/next-payout')
-  next(@Param('id') id: string) {
+  next(@Param('id', ParseIntPipe) id: number) {
     return this.groupsService.nextPayout(id);
   }
 
   @Patch(':id/mark-paid')
-  markPaid(@Param('id') id: string) {
+  markPaid(@Param('id', ParseIntPipe) id: number) {
     return this.groupsService.markPayoutComplete(id);
   }
 
   @Delete(':id')
   @UseGuards(AdminGuard)
-  delete(@Param('id') id: string) {
+  delete(@Param('id', ParseIntPipe) id: number) {
     return this.groupsService.deleteGroup(id);
   }
 
   @Get('my-groups')
-  myGroups(@CurrentUser() user: { userId: string }) {
+  myGroups(@CurrentUser() user: { userId: number }) {
     return this.groupsService.getUserGroups(user.userId);
   }
 
   @Get('my-contributions')
-  myContributions(@CurrentUser() user: { userId: string }) {
+  myContributions(@CurrentUser() user: { userId: number }) {
     return this.groupsService.getUserContributions(user.userId);
   }
 }

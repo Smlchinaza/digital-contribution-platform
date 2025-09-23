@@ -1,7 +1,7 @@
 "use client";
 
 interface PayoutInfo {
-  groupId: string;
+  groupId: number;
   groupTitle: string;
   amount: number;
   position: number;

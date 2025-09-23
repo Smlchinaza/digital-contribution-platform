@@ -1,8 +1,14 @@
+export interface GroupMember {
+  userId: number;
+  position: number;
+  hasReceived: boolean;
+}
+
 export interface Group {
-  id: string;
+  id: number;
   title: string;
   amount: number;
   plan: string;
   currentCycle: number;
-  members: Array<any>; // You can define a Member interface if needed
+  members: GroupMember[];
 }

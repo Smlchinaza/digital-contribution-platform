@@ -77,7 +77,7 @@ class ApiService {
     return this.handleResponse(response);
   }
 
-  async joinGroup(groupId: string) {
+  async joinGroup(groupId: number) {
     const response = await fetch(`${API_BASE_URL}/groups/${groupId}/join`, {
       method: 'POST',
       headers: this.getAuthHeaders(),
@@ -85,14 +85,14 @@ class ApiService {
     return this.handleResponse(response);
   }
 
-  async getNextPayout(groupId: string): Promise<PayoutInfo> {
+  async getNextPayout(groupId: number): Promise<PayoutInfo> {
     const response = await fetch(`${API_BASE_URL}/groups/${groupId}/next-payout`, {
       headers: this.getAuthHeaders(),
     });
     return this.handleResponse<PayoutInfo>(response);
   }
 
-  async markPayoutComplete(groupId: string) {
+  async markPayoutComplete(groupId: number) {
     const response = await fetch(`${API_BASE_URL}/groups/${groupId}/mark-paid`, {
       method: 'PATCH',
       headers: this.getAuthHeaders(),
@@ -156,7 +156,7 @@ class ApiService {
     return this.handleResponse<Transaction[]>(response);
   }
 
-  async advanceGroup(groupId: string): Promise<Group> {
+  async advanceGroup(groupId: number): Promise<Group> {
     const response = await fetch(`${API_BASE_URL}/admin/groups/${groupId}/advance`, {
       method: 'PATCH',
       headers: this.getAuthHeaders(),
@@ -178,7 +178,7 @@ class ApiService {
     totalReceived: number;
     pendingContributions: number;
     nextPayouts: Array<{
-      groupId: string;
+      groupId: number;
       groupTitle: string;
       amount: number;
       position: number;
@@ -239,7 +239,7 @@ class ApiService {
   }
 
   // Admin group management endpoints
-  async addUserToGroup(groupId: string, userId: string, position?: number): Promise<Group> {
+  async addUserToGroup(groupId: number, userId: number, position?: number): Promise<Group> {
     const response = await fetch(`${API_BASE_URL}/admin/groups/${groupId}/add-user`, {
       method: 'POST',
       headers: this.getAuthHeaders(),
@@ -248,7 +248,7 @@ class ApiService {
     return this.handleResponse<Group>(response);
   }
 
-  async removeUserFromGroup(groupId: string, userId: string): Promise<Group> {
+  async removeUserFromGroup(groupId: number, userId: number): Promise<Group> {
     const response = await fetch(`${API_BASE_URL}/admin/groups/${groupId}/remove-user`, {
       method: 'DELETE',
       headers: this.getAuthHeaders(),
@@ -257,7 +257,7 @@ class ApiService {
     return this.handleResponse<Group>(response);
   }
 
-  async assignNextPayout(groupId: string, userId: string): Promise<Group> {
+  async assignNextPayout(groupId: number, userId: number): Promise<Group> {
     const response = await fetch(`${API_BASE_URL}/admin/groups/${groupId}/assign-payout`, {
       method: 'PATCH',
       headers: this.getAuthHeaders(),

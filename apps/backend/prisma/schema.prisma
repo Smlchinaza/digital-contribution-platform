@@ -90,3 +90,20 @@ model Payment {
     user            User     @relation(fields: [userId], references: [id])
     group           Group    @relation(fields: [groupId], references: [id])
 }
+
+model Sermon {
+    id              Int      @id @default(autoincrement())
+    title           String
+    preacher        String
+    description     String?
+    date            DateTime
+    duration        String?
+    audioUrl        String   // Cloudinary URL
+    audioPublicId   String   // Cloudinary public ID for management
+    imageUrl        String?  // Cloudinary URL for sermon thumbnail
+    imagePublicId   String?  // Cloudinary public ID for image
+    downloadCount   Int      @default(0)
+    playCount       Int      @default(0)
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+}

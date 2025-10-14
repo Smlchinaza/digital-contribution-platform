@@ -3,6 +3,7 @@ import { PayoutInfo } from '../types/payout';
 import { Transaction } from '../types/transaction';
 import { User } from '../types/user';
 import { Payment, CreatePaymentDto, UpdatePaymentStatusDto } from '../types/payment';
+import { Sermon } from '../types/sermon';
 
 export const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001';
@@ -264,6 +265,90 @@ class ApiService {
       body: JSON.stringify({ userId }),
     });
     return this.handleResponse<Group>(response);
+  }
+
+  // Sermon endpoints
+  async getSermons(): Promise<Sermon[]> {
+    const response = await fetch(`${API_BASE_URL}/sermons`);
+    return this.handleResponse<Sermon[]>(response);
+  }
+
+  async getSermonById(id: number): Promise<Sermon> {
+    const response = await fetch(`${API_BASE_URL}/sermons/${id}`);
+    return this.handleResponse<Sermon>(response);
+  }
+
+  async createSermon(formData: FormData, onProgress?: (progress: number) => void) {
+    const token = localStorage.getItem('token');
+    
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      
+      // Track upload progress
+      xhr.upload.addEventListener('progress', (e) => {
+        if (e.lengthComputable && onProgress) {
+          const percentComplete = (e.loaded / e.total) * 100;
+          onProgress(percentComplete);
+        }
+      });
+      
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            const response = JSON.parse(xhr.responseText);
+            resolve(response);
+          } catch (error) {
+            reject(new Error('Failed to parse response'));
+          }
+        } else {
+          reject(new Error(xhr.responseText || `HTTP error! status: ${xhr.status}`));
+        }
+      });
+      
+      xhr.addEventListener('error', () => {
+        reject(new Error('Network error'));
+      });
+      
+      xhr.open('POST', `${API_BASE_URL}/sermons`);
+      if (token) {
+        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+      }
+      xhr.send(formData);
+    });
+  }
+
+  async updateSermon(id: number, formData: FormData) {
+    const token = localStorage.getItem('token');
+    const response = await fetch(`${API_BASE_URL}/sermons/${id}`, {
+      method: 'PATCH',
+      headers: {
+        ...(token && { Authorization: `Bearer ${token}` }),
+      },
+      body: formData,
+    });
+    return this.handleResponse(response);
+  }
+
+  async deleteSermon(id: number) {
+    const response = await fetch(`${API_BASE_URL}/sermons/${id}`, {
+      method: 'DELETE',
+      headers: this.getAuthHeaders(),
+    });
+    return this.handleResponse(response);
+  }
+
+  async incrementSermonPlayCount(id: number) {
+    const response = await fetch(`${API_BASE_URL}/sermons/${id}/play`, {
+      method: 'POST',
+    });
+    return this.handleResponse(response);
+  }
+
+  async incrementSermonDownloadCount(id: number) {
+    const response = await fetch(`${API_BASE_URL}/sermons/${id}/download`, {
+      method: 'POST',
+    });
+    return this.handleResponse(response);
   }
 }
 

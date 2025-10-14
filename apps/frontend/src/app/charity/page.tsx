@@ -104,14 +104,14 @@ export default function CharityFormPage() {
               </div>
 
               <div className="sm:col-span-2">
-                <label className="mb-1 block text-sm text-white/80">Message / Need</label>
+                <label className="mb-1 block text-sm text-white/80">Account Details</label>
                 <textarea
                   value={message}
                   onChange={e => setMessage(e.target.value)}
                   rows={6}
                   required
                   className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-white placeholder-white/50 outline-none focus:border-purple-400/40 focus:ring-1 focus:ring-purple-400/30"
-                  placeholder="Describe your request or pledge"
+                  placeholder="Account name must match the name entered above"
                 />
               </div>
             </div>

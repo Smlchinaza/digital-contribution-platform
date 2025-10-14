@@ -93,7 +93,7 @@ export default function ChurchHome() {
           {[
             { title: "Give Online", desc: "Partner with our mission through secure online giving.", cta: "Donate Now", href: "/contrib" },
             { title: "Prayer Requests", desc: "We would love to pray with you and for you.", cta: "Send a Request", href: "#contact" },
-            { title: "Sermons", desc: "Grow through the Word with recent messages.", cta: "Browse Messages", href: "#events" }
+            { title: "Sermons", desc: "Grow through the Word with recent messages.", cta: "Browse Messages", href: "/sermons" }
           ].map((card) => (
             <div key={card.title} className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition hover:bg-white/10">
               <h4 className="text-lg font-semibold">{card.title}</h4>
@@ -110,7 +110,7 @@ export default function ChurchHome() {
         <section id="ministries" className="mb-10 rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur">
           <h3 className="text-xl font-semibold">Our Ministries</h3>
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6 text-sm">
-            {["Children", "Youth", "Women", "Men", "Choir", "Evangelism"].map((m) => (
+            {["Children", "Youth", "Women", "Men", "Choir", "EFAC", "Band", "Evangelism",].map((m) => (
               <span key={m} className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-center text-white/90">{m}</span>
             ))}
           </div>
@@ -125,11 +125,11 @@ export default function ChurchHome() {
             </div>
             <div className="rounded-lg border border-white/10 bg-white/5 p-4">
               <p className="text-white/70">Phone</p>
-              <p className="mt-1">+234 XXX XXXX XXX</p>
+              <p className="mt-1">+234 706 5078 088 (Curate)</p>
             </div>
             <div className="rounded-lg border border-white/10 bg-white/5 p-4">
               <p className="text-white/70">Email</p>
-              <p className="mt-1">info@stpetersanglican.org</p>
+              <p className="mt-1">XXX</p>
             </div>
             <div className="rounded-lg border border-white/10 bg-white/5 p-4">
               <p className="text-white/70">Office Hours</p>
@@ -156,9 +156,6 @@ export default function ChurchHome() {
               <h4 className="font-semibold mb-3">Connect</h4>
               <ul className="space-y-2 text-white/80 text-sm">
                 <li>Facebook</li>
-                <li>Instagram</li>
-                <li>YouTube</li>
-                <li>WhatsApp</li>
               </ul>
             </div>
             <div>
@@ -166,8 +163,6 @@ export default function ChurchHome() {
               <ul className="space-y-2 text-white/80 text-sm">
                 <li>Sermon Archive</li>
                 <li>Bible Study</li>
-                <li>Prayer Guide</li>
-                <li>Newsletter</li>
               </ul>
             </div>
             <div>
